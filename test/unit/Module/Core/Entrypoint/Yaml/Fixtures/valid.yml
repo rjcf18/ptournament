@@ -1,0 +1,7 @@
+test1:
+  key: value
+
+test2:
+  multiple-key:
+    key1: value1
+    key2: value2
