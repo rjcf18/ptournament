@@ -1,0 +1,8 @@
+base_path: /
+
+routes:
+  homepage: [/, PoolTournament\App\Module\Tournament\Entrypoint\IndexController::indexAction, GET]
+  homepage/index: [/index, PoolTournament\App\Module\Tournament\Entrypoint\IndexController::indexAction, GET]
+  match: [/match, PoolTournament\App\Module\Match\Entrypoint\IndexController::indexAction, GET]
+  friend: [/friend, PoolTournament\App\Module\Friend\Entrypoint\IndexController::indexAction, GET]
+  match/result: [/match/result, PoolTournament\App\Module\Match\Entrypoint\IndexController::resultAction, [POST, PUT]]
