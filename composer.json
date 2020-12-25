@@ -1,0 +1,31 @@
+{
+    "name": "ptournament/app",
+    "description": "A project to apply some concepts using no framework",
+    "version": "0.0.1",
+    "type": "project",
+    "config": {
+        "bin-dir": "bin/",
+        "platform": {
+            "php": "8.0.0"
+        }
+    },
+    "require": {
+        "php": "8.0.0",
+        "php-di/php-di": "6.3.0",
+        "ext-yaml": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "PoolTournament\\App\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9.5.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "UnitTest\\": "test/unit/"
+        }
+    }
+}

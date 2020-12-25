@@ -1,0 +1,18 @@
+# Editors
+*.sublime-*
+.idea
+
+# Third-Party
+/vendor
+/bin
+
+# Test Files
+test/reports/*
+*.phpunit.result.cache
+
+# Env files
+*.env
+*.envrc
+
+# Include directories with .gitkeep
+!.gitkeep
