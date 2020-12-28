@@ -60,9 +60,11 @@ class Request
         return $this->body;
     }
 
-    public function setBody(array $body): void
+    public function setBody(array $body): self
     {
         $this->body = $body;
+
+        return $this;
     }
 
     public function getHeaders(): array
@@ -70,9 +72,11 @@ class Request
         return $this->headers;
     }
 
-    public function setHeaders(array $headers): void
+    public function setHeaders(array $headers): self
     {
         $this->headers = $headers;
+
+        return $this;
     }
 
     public function getQueryParameters(): array
@@ -80,9 +84,11 @@ class Request
         return $this->queryParameters;
     }
 
-    public function setQueryParameters(array $queryParameters): void
+    public function setQueryParameters(array $queryParameters): self
     {
         $this->queryParameters = $queryParameters;
+
+        return $this;
     }
 
     public function getNamedParameters(): array
@@ -90,8 +96,10 @@ class Request
         return $this->namedParameters;
     }
 
-    public function setNamedParameters(array $namedParameters): void
+    public function setNamedParameters(array $namedParameters): self
     {
         $this->namedParameters = $namedParameters;
+
+        return $this;
     }
 }

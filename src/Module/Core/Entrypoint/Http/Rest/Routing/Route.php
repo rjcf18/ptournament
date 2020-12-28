@@ -20,7 +20,7 @@ class Route
         $this->name = $name;
         $this->url = $url;
         $this->controller = $handler[0];
-        $this->action = $handler[1] ?? '';
+        $this->action = $handler[1] ?? self::DEFAULT_ACTION;
         $this->methods = $methods;
     }
 
@@ -50,14 +50,10 @@ class Route
         return $this->methods;
     }
 
-    public function dispatch(Request $request): void
+    public function dispatch(Request $request): mixed
     {
         $controllerInstance = new $this->controller();
 
-        if (empty($this->action) || trim($this->action) === '') {
-            $this->action = self::DEFAULT_ACTION;
-        }
-
-        call_user_func_array([$controllerInstance, $this->action], [$request]);
+        return call_user_func_array([$controllerInstance, $this->action], [$request]);
     }
 }
