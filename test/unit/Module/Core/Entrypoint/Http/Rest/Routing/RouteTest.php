@@ -45,9 +45,4 @@ class RouteTest extends TestCase
     {
         $this->assertEquals('testAction', $this->route->getAction());
     }
-
-    public function testGetAction()
-    {
-        $this->assertEquals('testAction', $this->route->getAction());
-    }
 }
