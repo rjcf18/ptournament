@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace PoolTournament\App\Module\Core\Entrypoint\Routing;
 
+use PoolTournament\App\Module\Core\Entrypoint\Http\Rest\Request;
 use PoolTournament\App\Module\Core\Entrypoint\Routing\Exception\ForbiddenRequestMethodException;
 use PoolTournament\App\Module\Core\Entrypoint\Routing\Exception\NoRouteFoundException;
 
@@ -46,77 +47,56 @@ class Router
         $this->basePath = rtrim($basePath, '/');
     }
 
-    public function run(): bool|Route
-    {
-        $requestMethod = $_SERVER['REQUEST_METHOD'];
-        $requestUrl = $_SERVER['REQUEST_URI'];
-
-        $requestUrl = $this->stripUrlEncodedParamsFromUrl($requestUrl);
-
-        return $this->matchRequestToRoute($requestUrl, $requestMethod);
-    }
-
-    private function stripUrlEncodedParamsFromUrl(mixed $requestUrl): string
-    {
-
-        if ($this->urlHasEncodedParameters($requestUrl)) {
-            $requestUrl = strtok($requestUrl, '?');
-        }
-
-        return $requestUrl;
-    }
-
-    private function urlHasEncodedParameters(mixed $requestUrl): bool
-    {
-        return str_contains($requestUrl, '?');
-    }
-
     /**
-     * @param string $requestUrl
-     * @param string $requestMethod
+     * @param Request $request
      *
      * @throws ForbiddenRequestMethodException
      * @throws NoRouteFoundException
      *
      * @return Route
      */
-    private function matchRequestToRoute(string $requestUrl, string $requestMethod): Route
+    public function matchRequestToRoute(Request $request): Route
     {
         foreach ($this->routes->getAll() as $route) {
-            if (!$this->requestMethodIsAllowed($requestMethod, $route)) {
-                throw new ForbiddenRequestMethodException($requestMethod, $route->getMethods());
+            $pattern = sprintf('@^%s%s/?$@i', preg_quote($this->basePath), $this->getRouteRegex($route));
+
+            if (!preg_match($pattern, $request->getUri(), $matches)) {
+                continue;
             }
 
-            $pattern = sprintf('@^%s%s/?$@i', preg_quote($this->basePath), $route->getUrl());
-
-            if (!preg_match($pattern, $requestUrl, $matches)) {
-                continue;
+            if (!$this->requestMethodIsAllowed($request->getMethod(), $route)) {
+                throw new ForbiddenRequestMethodException($request->getMethod(), $route->getMethods());
             }
 
             $params = [];
 
-            if (preg_match_all('/:([\w-%]+)/', $route->getUrl(), $matches)) {
-                $parametersFound = $matches[1];
-                $matchesFound = count($matches) - 1;
+            if (preg_match_all('/:(\w+)/', $route->getUrl(), $namedParametersNames)) {
+                array_shift($matches);
+                $namedParametersValues = $matches;
+                $namedParametersNames = $namedParametersNames[1];
 
-                if (count($parametersFound) !== $matchesFound) {
+                if (count($namedParametersNames) !== count($namedParametersValues)) {
                     continue;
                 }
 
-                foreach ($parametersFound as $key => $name) {
-                    if (isset($matches[$key+1])) {
-                        $params[$name] = $matches[$key+1];
+                foreach ($namedParametersNames as $key => $name) {
+                    if (isset($namedParametersValues[$key])) {
+                        $params[$name] = $namedParametersValues[$key];
                     }
                 }
             }
 
-            $route->setParameters($params);
-            $route->dispatch();
+            $request->setNamedParameters($params);
 
             return $route;
         }
 
         throw new NoRouteFoundException();
+    }
+
+    private function getRouteRegex(Route $route): string
+    {
+        return rtrim(preg_replace('/(:\w+)/', '(\w+)', $route->getUrl()), '/');
     }
 
     private function requestMethodIsAllowed(string $requestMethod, Route $route): bool

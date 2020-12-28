@@ -8,7 +8,7 @@ ENV TZ=Europe/Lisbon
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt update && apt install -y php8.0-fpm php8.0-pgsql php8.0-gd php8.0-zip php8.0-dom php8.0-mbstring php8.0-yaml php8.0-json nginx libpcre3-dev unzip git curl
+RUN apt update && apt install -y nginx libpcre3-dev unzip git curl php8.0-dev php8.0-common php8.0-fpm php8.0-mysql php8.0-gd php8.0-zip php8.0-dom php8.0-mbstring php8.0-yaml
 
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 

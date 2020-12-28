@@ -1,14 +1,17 @@
 <?php declare(strict_types=1);
 namespace PoolTournament\App\Module\Core\Entrypoint\Routing;
 
+use PoolTournament\App\Module\Core\Entrypoint\Http\Rest\Request;
+
 class Route
 {
+    private const DEFAULT_ACTION = 'indexAction';
+
     private string $name;
     private string $url;
     private string $controller;
     private string $action;
     private array $methods;
-    private array $parameters = [];
 
     public function __construct(string $name, string $url, string $handler, array $methods)
     {
@@ -36,24 +39,14 @@ class Route
         return $this->methods;
     }
 
-    public function getParameters()
+    public function dispatch(Request $request): void
     {
-        return $this->parameters;
-    }
-
-    public function setParameters(array $parameters)
-    {
-        $this->parameters = $parameters;
-    }
-
-    public function dispatch(): void
-    {
-        $controllerInstance = new $this->controller;
+        $controllerInstance = new $this->controller();
 
         if (empty($this->action) || trim($this->action) === '') {
-            $this->action = 'indexAction';
+            $this->action = self::DEFAULT_ACTION;
         }
 
-        call_user_func_array([$controllerInstance, $this->action], $this->parameters);
+        call_user_func_array([$controllerInstance, $this->action], [$request]);
     }
 }
