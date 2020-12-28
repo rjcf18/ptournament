@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace PoolTournament\App\Module\Core\Entrypoint\Routing;
+namespace PoolTournament\App\Module\Core\Entrypoint\Http\Rest\Routing;
 
 use PoolTournament\App\Module\Core\Entrypoint\Http\Rest\Request;
 
@@ -33,6 +33,17 @@ class Route
     {
         return $this->url;
     }
+
+    public function getController(): mixed
+    {
+        return $this->controller;
+    }
+
+    public function getAction(): mixed
+    {
+        return $this->action;
+    }
+
 
     public function getMethods(): array
     {

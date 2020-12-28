@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace PoolTournament\App\Module\Core\Entrypoint\Routing\Exception;
+namespace PoolTournament\App\Module\Core\Entrypoint\Http\Rest\Routing\Exception;
 
 use Exception;
 

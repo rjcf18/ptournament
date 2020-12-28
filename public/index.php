@@ -5,8 +5,8 @@ define('PROJECT_ROOT', __DIR__ . '/..');
 require PROJECT_ROOT . '/vendor/autoload.php';
 
 use PoolTournament\App\Module\Core\Entrypoint\Http\Rest\Request;
+use PoolTournament\App\Module\Core\Entrypoint\Http\Rest\Routing\Router;
 use PoolTournament\App\Module\Core\Entrypoint\Yaml\Parser as YamlParser;
-use PoolTournament\App\Module\Core\Entrypoint\Routing\Router;
 
 header("Content-Type: application/json");
 

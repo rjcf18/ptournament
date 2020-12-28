@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
-namespace PoolTournament\App\Module\Core\Entrypoint\Routing;
+namespace PoolTournament\App\Module\Core\Entrypoint\Http\Rest\Routing;
 
 use PoolTournament\App\Module\Core\Entrypoint\Http\Rest\Request;
-use PoolTournament\App\Module\Core\Entrypoint\Routing\Exception\ForbiddenRequestMethodException;
-use PoolTournament\App\Module\Core\Entrypoint\Routing\Exception\NoRouteFoundException;
+use PoolTournament\App\Module\Core\Entrypoint\Http\Rest\Routing\Exception\ForbiddenRequestMethodException;
+use PoolTournament\App\Module\Core\Entrypoint\Http\Rest\Routing\Exception\NoRouteFoundException;
 
 class Router
 {
@@ -42,7 +42,17 @@ class Router
         return $router;
     }
 
-    public function setBasePath($basePath): void
+    public function getRoutes(): RouteCollection
+    {
+        return $this->routes;
+    }
+
+    public function getBasePath(): string
+    {
+        return $this->basePath;
+    }
+
+    public function setBasePath(string $basePath): void
     {
         $this->basePath = rtrim($basePath, '/');
     }

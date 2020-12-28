@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace PoolTournament\App\Module\Core\Entrypoint\Routing;
+namespace PoolTournament\App\Module\Core\Entrypoint\Http\Rest\Routing;
 
 class RouteCollection
 {
