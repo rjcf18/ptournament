@@ -29,8 +29,9 @@ class Request
 
         $headers = [];
         foreach ($_SERVER as $key => $value) {
-            if (str_starts_with($key, "HTTP_")) {
-                $headers[$key] = $value;
+            if (str_starts_with($key, 'HTTP_')) {
+                $headerName = str_replace('HTTP_', '', $key);
+                $headers[$headerName] = $value;
             }
         }
 
