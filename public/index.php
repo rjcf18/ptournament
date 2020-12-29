@@ -4,9 +4,9 @@ define('PROJECT_ROOT', __DIR__ . '/..');
 
 require PROJECT_ROOT . '/vendor/autoload.php';
 
-use PoolTournament\App\Module\Core\Entrypoint\Http\Rest\Request;
-use PoolTournament\App\Module\Core\Entrypoint\Http\Rest\Routing\Router;
-use PoolTournament\App\Module\Core\Entrypoint\Yaml\Parser as YamlParser;
+use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Request;
+use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Routing\Router;
+use PoolTournament\Application\Module\Core\Entrypoint\Yaml\Parser as YamlParser;
 
 header("Content-Type: application/json");
 
@@ -22,7 +22,7 @@ try {
 } catch (Throwable $throwable) {
     http_response_code(500);
 
-    echo json_encode([
+    return json_encode([
         'code' => 500,
         'error' => $throwable->getTraceAsString()
     ]);

@@ -18,7 +18,9 @@
     },
     "autoload": {
         "psr-4": {
-            "PoolTournament\\App\\": "src/"
+            "PoolTournament\\": "src/",
+            "PoolTournament\\Application\\": "src/Application/",
+            "PoolTournament\\Domain\\": "src/Domain/"
         }
     },
     "require-dev": {
