@@ -2,7 +2,6 @@
 namespace UnitTest\Application\Module\Core\Entrypoint\Http\Rest\Routing;
 
 use PHPUnit\Framework\TestCase;
-use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Request;
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Routing\Route;
 
 class RouteTest extends TestCase
@@ -45,17 +44,5 @@ class RouteTest extends TestCase
     public function testGetAction()
     {
         $this->assertEquals('testAction', $this->route->getAction());
-    }
-
-    public function testDispatch()
-    {
-        $request = new Request('POST', '/test/50?param=value');
-        $request
-            ->setNamedParameters(['id' => '50'])
-            ->setBody(['test' => 'value'])
-            ->setHeaders(['CONTENT_TYPE' => 'application/json'])
-            ->setQueryParameters(['param' => 'value']);
-
-        $this->assertEquals([$request], $this->route->dispatch($request));
     }
 }

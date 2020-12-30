@@ -44,16 +44,8 @@ class Route
         return $this->action;
     }
 
-
     public function getMethods(): array
     {
         return $this->methods;
-    }
-
-    public function dispatch(Request $request): mixed
-    {
-        $controllerInstance = new $this->controller();
-
-        return call_user_func_array([$controllerInstance, $this->action], [$request]);
     }
 }
