@@ -14,7 +14,8 @@
         "php-di/php-di": "6.3.0",
         "psr/http-message": "1.0.1",
         "ext-yaml": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-pdo": "*"
     },
     "autoload": {
         "psr-4": {
@@ -33,6 +34,7 @@
     },
     "scripts": {
         "setup": "docker-compose up -d && docker exec ptournament-web composer install",
+        "migrate": "docker exec ptournament-web php -f database/runMigrationManager.php",
         "depsUpdate": "docker exec ptournament-web composer update",
         "dockerUp": "docker-compose up -d",
         "dockerDown": "docker-compose down",
