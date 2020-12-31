@@ -24,8 +24,6 @@ $containerBuilder->addDefinitions(
             ->constructor(DI\get(Connection::class), __DIR__ . '/../database/migrations'),
         SeedsManager::class => DI\create()
             ->constructor(DI\get(Connection::class), __DIR__ . '/../database/seeds'),
-        MySQLFriendRepository::class => DI\create()
-            ->constructor(DI\get(Connection::class)),
         FriendRepositoryContract::class => DI\autowire(MySQLFriendRepository::class),
     ]
 );
