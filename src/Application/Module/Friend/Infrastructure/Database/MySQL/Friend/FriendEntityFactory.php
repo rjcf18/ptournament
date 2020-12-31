@@ -9,7 +9,7 @@ class FriendEntityFactory
     public static function create(array $friendArray): Friend
     {
         return new Friend(
-            (int) $friendArray['id'],
+            (int) $friendArray['id_friend'],
             $friendArray['name'],
             DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $friendArray['created_at']),
             DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $friendArray['updated_at'])

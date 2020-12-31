@@ -25,9 +25,8 @@ class Repository implements FriendRepository
         );
 
         $statement = $this->connection->query($query, Connection::FETCH_ASSOC);
-        $result = $statement->fetch();
-        $friendArray = !empty($result) ? $result : [];
+        $friend = $statement->fetch();
 
-        return FriendEntityFactory::create($friendArray);
+        return $friend ? FriendEntityFactory::create($friend) : null;
     }
 }
