@@ -6,13 +6,11 @@ use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\Connect
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\ConnectionConfig;
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\MigrationManager;
 use DI\ContainerBuilder;
+use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\SeedsManager;
 
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions(
     [
-        // Bind an interface to an implementation
-//        Interface::class => create(Implementation::class),
-
         ConnectionConfig::class => DI\factory(
             function () {
                 return ConnectionConfig::createFromFile(__DIR__ . '/database.yml');
@@ -21,7 +19,9 @@ $containerBuilder->addDefinitions(
         Connection::class => DI\create()
             ->constructor(DI\get(ConnectionConfig::class)),
         MigrationManager::class => DI\create()
-            ->constructor(DI\get(Connection::class), __DIR__ . '/../database/migrations')
+            ->constructor(DI\get(Connection::class), __DIR__ . '/../database/migrations'),
+        SeedsManager::class => DI\create()
+            ->constructor(DI\get(Connection::class), __DIR__ . '/../database/seeds'),
     ]
 );
 
