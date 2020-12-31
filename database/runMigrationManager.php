@@ -7,10 +7,10 @@ use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\Migrati
 $container = require __DIR__ . '/../config/dependency-injection.php';
 
 try {
-    $migrationManager = $container->get(MigrationManager::class);
-    $migrationManager->run();
-    $migrationManager->executeMigrations();
-    $migrationManager->unlock();
+    $migrationsManager = $container->get(MigrationManager::class);
+    $migrationsManager->run();
+    $migrationsManager->executeMigrations();
+    $migrationsManager->unlock();
 
     echo 'Migrations ran successfully';
 } catch (Throwable $e) {

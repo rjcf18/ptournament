@@ -7,6 +7,8 @@ use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\Connect
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\MigrationManager;
 use DI\ContainerBuilder;
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\SeedsManager;
+use PoolTournament\Application\Module\Friend\Infrastructure\Database\MySQL\Friend\Repository as MySQLFriendRepository;
+use PoolTournament\Domain\Module\Friend\FetchInfo\FriendRepository as FriendRepositoryContract;
 
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions(
@@ -22,6 +24,9 @@ $containerBuilder->addDefinitions(
             ->constructor(DI\get(Connection::class), __DIR__ . '/../database/migrations'),
         SeedsManager::class => DI\create()
             ->constructor(DI\get(Connection::class), __DIR__ . '/../database/seeds'),
+        MySQLFriendRepository::class => DI\create()
+            ->constructor(DI\get(Connection::class)),
+        FriendRepositoryContract::class => DI\autowire(MySQLFriendRepository::class),
     ]
 );
 
