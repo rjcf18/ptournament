@@ -9,15 +9,15 @@ class CreateFriendTable extends AbstractMigration
     public function up(): void
     {
         $query = sprintf(
-            "CREATE TABLE IF NOT EXISTS `%s` (
-                `id_friend` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+            'CREATE TABLE IF NOT EXISTS `%1$s` (
+                `id_%1$s` INT UNSIGNED NOT NULL AUTO_INCREMENT,
                 `name` VARCHAR(255) NOT NULL,
                 `created_at` DATETIME NOT NULL,
                 `updated_at` DATETIME NOT NULL,
-                PRIMARY KEY (`id_friend`)
+                PRIMARY KEY (`id_%1$s`)
             )
             ENGINE = INNODB
-            DEFAULT CHARSET = UTF8MB4",
+            DEFAULT CHARSET = UTF8MB4',
             self::TABLE_NAME
         );
 
