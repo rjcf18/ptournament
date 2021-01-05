@@ -2,10 +2,9 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use DI\ContainerBuilder;
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\Connection;
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\ConnectionConfig;
-use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\MigrationManager;
-use DI\ContainerBuilder;
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\SchemaUpdateManager;
 use PoolTournament\Application\Module\Friend\Infrastructure\Database\MySQL\Friend\Repository as MySQLFriendRepository;
 use PoolTournament\Domain\Module\Friend\FetchInfo\FriendRepository as FriendRepositoryContract;
