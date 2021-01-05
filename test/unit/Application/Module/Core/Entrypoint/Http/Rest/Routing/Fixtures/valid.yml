@@ -1,0 +1,6 @@
+base_path: /base
+
+routes:
+  test1: [/url1, UnitTest\Application\Module\Core\Entrypoint\Http\Rest\Routing\Fixtures\TestController::indexAction, GET]
+  test2: [/url2, UnitTest\Application\Module\Core\Entrypoint\Http\Rest\Routing\Fixtures\TestController::testAction, [GET, POST]]
+  test3: [/url3, UnitTest\Application\Module\Core\Entrypoint\Http\Rest\Routing\Fixtures\TestController, PUT]

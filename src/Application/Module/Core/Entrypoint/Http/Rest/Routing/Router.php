@@ -7,54 +7,11 @@ use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Routing\Exceptio
 
 class Router
 {
-    private const CONFIG_FIELD_BASE_PATH = 'base_path';
-    private const CONFIG_FIELD_ROUTES = 'routes';
+    private RouterConfig $routerConfig;
 
-    private RouteCollection $routes;
-    private string $basePath = '';
-
-    public function __construct(RouteCollection $routes)
+    public function __construct(RouterConfig $routerConfig)
     {
-        $this->routes = $routes;
-    }
-
-    public static function createFromConfig(array $routesConfig): self
-    {
-        $routeCollection = RouteCollection::create();
-
-        foreach ($routesConfig[self::CONFIG_FIELD_ROUTES] as $name => $route) {
-            $routeCollection->addRoute(
-                new Route(
-                    name: $name,
-                    url: $route[0],
-                    handler: $route[1],
-                    methods: (array) $route[2]
-                )
-            );
-        }
-
-        $router = new self($routeCollection);
-
-        if (isset($routesConfig[self::CONFIG_FIELD_BASE_PATH])) {
-            $router->setBasePath($routesConfig[self::CONFIG_FIELD_BASE_PATH]);
-        }
-
-        return $router;
-    }
-
-    public function getRoutes(): RouteCollection
-    {
-        return $this->routes;
-    }
-
-    public function getBasePath(): string
-    {
-        return $this->basePath;
-    }
-
-    public function setBasePath(string $basePath): void
-    {
-        $this->basePath = rtrim($basePath, '/');
+        $this->routerConfig = $routerConfig;
     }
 
     /**
@@ -67,8 +24,10 @@ class Router
      */
     public function matchRequestToRoute(Request $request): Route
     {
-        foreach ($this->routes->getAll() as $route) {
-            $pattern = sprintf('@^%s%s/?$@i', preg_quote($this->basePath), $this->getRouteRegex($route));
+        $basePath = $this->routerConfig->getBasePath();
+
+        foreach ($this->routerConfig->getRoutes()->getAll() as $route) {
+            $pattern = sprintf('@^%s%s/?$@i', preg_quote($basePath), $this->getRouteRegex($route));
 
             if (!preg_match($pattern, $request->getUri(), $matches)) {
                 continue;

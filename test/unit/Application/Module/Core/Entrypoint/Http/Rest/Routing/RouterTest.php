@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace UnitTest\Application\Module\Core\Entrypoint\Http\Rest\Routing;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Request;
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Routing\Exception\ForbiddenRequestMethodException;
@@ -8,19 +9,26 @@ use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Routing\Exceptio
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Routing\Route;
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Routing\RouteCollection;
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Routing\Router;
+use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Routing\RouterConfig;
 
 class RouterTest extends TestCase
 {
+    private MockObject|RouterConfig $routerConfigMock;
+
+    private Router $router;
+
+    protected function setUp(): void
+    {
+        $this->routerConfigMock = $this->getRouterConfigMock();
+        $this->router = new Router($this->routerConfigMock);
+    }
+
     /**
      * @throws ForbiddenRequestMethodException
      * @throws NoRouteFoundException
      */
     public function testMatchRequestToRouteWhenRouteIsFound()
     {
-        $router = $this->getRouter();
-
-        $request = new Request('GET', '/test/');
-
         $expectedRoute = new Route(
             'routeTest',
             '/test/',
@@ -28,7 +36,19 @@ class RouterTest extends TestCase
             ['GET']
         );
 
-        $this->assertEquals($expectedRoute, $router->matchRequestToRoute($request));
+        $this->routerConfigMock
+            ->expects($this->once())
+            ->method('getRoutes')
+            ->willReturn($this->getRouteCollection());
+
+        $this->routerConfigMock
+            ->expects($this->once())
+            ->method('getBasePath')
+            ->willReturn('');
+
+        $request = new Request('GET', '/test/');
+
+        $this->assertEquals($expectedRoute, $this->router->matchRequestToRoute($request));
     }
 
     /**
@@ -37,19 +57,27 @@ class RouterTest extends TestCase
      */
     public function testMatchRequestToRouteWhenMethodNotAllowed()
     {
-        $router = $this->getRouter();
+        $this->routerConfigMock
+            ->expects($this->once())
+            ->method('getRoutes')
+            ->willReturn($this->getRouteCollection());
+
+        $this->routerConfigMock
+            ->expects($this->once())
+            ->method('getBasePath')
+            ->willReturn('');
 
         $request = new Request('DELETE', '/test/');
 
         $expectedException = new ForbiddenRequestMethodException(
             $request->getMethod(),
-            $router->getRoutes()->get('routeTest')->getMethods()
+            $this->getRouteCollection()->get('routeTest')->getMethods()
         );
 
         $this->expectException($expectedException::class);
         $this->expectExceptionMessage($expectedException->getMessage());
 
-        $this->assertNull($router->matchRequestToRoute($request));
+        $this->assertNull($this->router->matchRequestToRoute($request));
     }
 
     /**
@@ -58,7 +86,15 @@ class RouterTest extends TestCase
      */
     public function testMatchRequestToRouteWhenNoRouteIsFound()
     {
-        $router = $this->getRouter();
+        $this->routerConfigMock
+            ->expects($this->once())
+            ->method('getRoutes')
+            ->willReturn($this->getRouteCollection());
+
+        $this->routerConfigMock
+            ->expects($this->once())
+            ->method('getBasePath')
+            ->willReturn('');
 
         $request = new Request('DELETE', '/no/route/');
 
@@ -67,15 +103,7 @@ class RouterTest extends TestCase
         $this->expectException($expectedException::class);
         $this->expectExceptionMessage($expectedException->getMessage());
 
-        $this->assertNull($router->matchRequestToRoute($request));
-    }
-
-    public function testSetBasePath()
-    {
-        $router = new Router(new RouteCollection());
-        $router->setBasePath('/root/');
-
-        $this->assertEquals('/root', $router->getBasePath());
+        $this->assertNull($this->router->matchRequestToRoute($request));
     }
 
     /**
@@ -84,8 +112,15 @@ class RouterTest extends TestCase
      */
     public function testMatchRequestToRouteWithBasePath()
     {
-        $router = $this->getRouter();
-        $router->setBasePath('/localhost/root');
+        $this->routerConfigMock
+            ->expects($this->once())
+            ->method('getRoutes')
+            ->willReturn($this->getRouteCollection());
+
+        $this->routerConfigMock
+            ->expects($this->once())
+            ->method('getBasePath')
+            ->willReturn('/localhost/root');
 
         $request = new Request('GET', '/localhost/root/test');
 
@@ -96,7 +131,7 @@ class RouterTest extends TestCase
             ['GET']
         );
 
-        $this->assertEquals($expectedRoute, $router->matchRequestToRoute($request));
+        $this->assertEquals($expectedRoute, $this->router->matchRequestToRoute($request));
     }
 
     /**
@@ -105,7 +140,15 @@ class RouterTest extends TestCase
      */
     public function testMatchRequestToRouteWithNamedParameters()
     {
-        $router = $this->getRouter();
+        $this->routerConfigMock
+            ->expects($this->once())
+            ->method('getRoutes')
+            ->willReturn($this->getRouteCollection());
+
+        $this->routerConfigMock
+            ->expects($this->once())
+            ->method('getBasePath')
+            ->willReturn('');
 
         $request = new Request('GET', '/test/100');
 
@@ -116,39 +159,14 @@ class RouterTest extends TestCase
             ['GET']
         );
 
-        $this->assertEquals($expectedRoute, $router->matchRequestToRoute($request));
+        $this->assertEquals($expectedRoute, $this->router->matchRequestToRoute($request));
 
         $expectedNamedParameters = ['id' => '100'];
 
         $this->assertEquals($expectedNamedParameters, $request->getNamedParameters());
     }
 
-    public function testCreateFromConfigWhenConfigIsCorrect()
-    {
-        $config = [
-            'base_path' => '/root/',
-            'routes' => [
-                'routeTest' => ['/test/', 'UnitTest\Application\Module\Core\Entrypoint\Http\Rest\Routing\Fixtures\TestController::testAction', ['GET']]
-            ]
-        ];
-
-        $expectedRouter = new Router(
-            (new RouteCollection())
-                ->addRoute(
-                    new Route(
-                        'routeTest',
-                        '/test/',
-                        'UnitTest\Application\Module\Core\Entrypoint\Http\Rest\Routing\Fixtures\TestController::testAction',
-                        ['GET']
-                    )
-                )
-        );
-        $expectedRouter->setBasePath('/root');
-
-        $this->assertEquals($expectedRouter, Router::createFromConfig($config));
-    }
-
-    private function getRouter(): Router
+    private function getRouteCollection(): RouteCollection
     {
         $collection = new RouteCollection();
         $collection->addRoute(
@@ -178,6 +196,14 @@ class RouterTest extends TestCase
             )
         );
 
-        return new Router($collection);
+        return $collection;
+    }
+
+    private function getRouterConfigMock(): MockObject|RouterConfig
+    {
+        return $this->getMockBuilder(RouterConfig::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getRoutes', 'getBasePath'])
+            ->getMock();
     }
 }
