@@ -9,18 +9,18 @@ class AddDataToFriendTable extends AbstractMigration
     public function up(): void
     {
         $query = sprintf(
-            "INSERT INTO `%s` (`name`, `created_at`, `updated_at`) 
+            "INSERT INTO `%s` (`name`, `points`, `balls`, `created_at`, `updated_at`) 
                     VALUES
-                        ('Friend A', NOW(), NOW()),
-                        ('Friend B', NOW(), NOW()),
-                        ('Friend C', NOW(), NOW()),
-                        ('Friend D', NOW(), NOW()),
-                        ('Friend E', NOW(), NOW()),
-                        ('Friend F', NOW(), NOW()),
-                        ('Friend G', NOW(), NOW()),
-                        ('Friend H', NOW(), NOW()),
-                        ('Friend I', NOW(), NOW()),
-                        ('Friend J', NOW(), NOW());",
+                        ('Friend A', 0, 0, NOW(), NOW()),
+                        ('Friend B', 1, 8, NOW(), NOW()),
+                        ('Friend C', 2, 13, NOW(), NOW()),
+                        ('Friend D', 1, 16, NOW(), NOW()),
+                        ('Friend E', 3, 0, NOW(), NOW()),
+                        ('Friend F', 0, 0, NOW(), NOW()),
+                        ('Friend G', 0, 0, NOW(), NOW()),
+                        ('Friend H', 0, 0, NOW(), NOW()),
+                        ('Friend I', 0, 0, NOW(), NOW()),
+                        ('Friend J', 0, 0, NOW(), NOW());",
             self::TABLE_NAME
         );
 
