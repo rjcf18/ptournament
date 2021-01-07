@@ -18,6 +18,8 @@ This project consists in a simple pool tournament application to manage and keep
 - In order to setup/run the project it is required to have PHP (any version should suffice) and Composer installed.
 - Go to the root folder and run `composer setup` or `composer run setup`. The command will setup the docker environment with everything you need.
 - In order to run the unit tests run `composer unitTest` or `composer run unitTest`
+- In order to setup the database with all available migrations run `composer migrate`
+- In order to setup the database with the data from all available seeds run `composer seed`
 - For other commands check the composer.json file scripts section
 
 After setting up the project, for communicating with the API try sending requests to `http://localhost` or any of the other endpoints configured in `config/routing.yml`
