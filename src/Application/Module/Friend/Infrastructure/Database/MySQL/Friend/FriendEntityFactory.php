@@ -11,6 +11,8 @@ class FriendEntityFactory
         return new Friend(
             (int) $friendArray['id_friend'],
             $friendArray['name'],
+            (int) $friendArray['points'],
+            (int) $friendArray['balls'],
             DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $friendArray['created_at']),
             DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $friendArray['updated_at'])
         );

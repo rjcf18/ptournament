@@ -7,13 +7,23 @@ class Friend
 {
     private int $id;
     private string $name;
+    private int $points;
+    private int $balls;
     private DateTimeImmutable $createdAt;
     private DateTimeImmutable $updatedAt;
 
-    public function __construct(int $id, string $name, DateTimeImmutable $createdAt, DateTimeImmutable $updatedAt)
-    {
+    public function __construct(
+        int $id,
+        string $name,
+        int $points,
+        int $balls,
+        DateTimeImmutable $createdAt,
+        DateTimeImmutable $updatedAt
+    ) {
         $this->id = $id;
         $this->name = $name;
+        $this->points = $points;
+        $this->balls = $balls;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
     }
@@ -38,6 +48,30 @@ class Friend
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getPoints(): int
+    {
+        return $this->points;
+    }
+
+    public function setPoints(int $points): self
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    public function getBalls(): int
+    {
+        return $this->balls;
+    }
+
+    public function setBalls(int $balls): self
+    {
+        $this->balls = $balls;
 
         return $this;
     }
