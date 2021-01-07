@@ -11,7 +11,7 @@ class AddDataToFriendTable extends AbstractMigration
         $query = sprintf(
             "INSERT INTO `%s` (`name`, `points`, `balls`, `created_at`, `updated_at`) 
                     VALUES
-                        ('Friend A', 0, 0, NOW(), NOW()),
+                        ('Friend A', 6, 0, NOW(), NOW()),
                         ('Friend B', 1, 8, NOW(), NOW()),
                         ('Friend C', 2, 13, NOW(), NOW()),
                         ('Friend D', 1, 16, NOW(), NOW()),
