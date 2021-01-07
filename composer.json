@@ -33,8 +33,8 @@
     },
     "scripts": {
         "setup": "docker-compose up -d && docker exec ptournament-web composer install",
-        "migrate": "docker exec ptournament-web php -f database/runMigrations.php",
-        "seed": "docker exec ptournament-web php -f database/runSeeds.php",
+        "migrate": "docker exec ptournament-web php database/scripts/schemaUpdate.php --type=migrations",
+        "seed": "docker exec ptournament-web php database/scripts/schemaUpdate.php --type=seeds",
         "depsUpdate": "docker exec ptournament-web composer update",
         "dockerUp": "docker-compose up -d",
         "dockerDown": "docker-compose down",
