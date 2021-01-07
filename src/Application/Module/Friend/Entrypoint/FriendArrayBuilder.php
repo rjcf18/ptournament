@@ -9,7 +9,9 @@ class FriendArrayBuilder
     {
         return [
             'id' => $friendEntity->getId(),
-            'name' => $friendEntity->getName()
+            'name' => $friendEntity->getName(),
+            'points' => $friendEntity->getPoints(),
+            'balls' => $friendEntity->getBalls(),
         ];
     }
 }
