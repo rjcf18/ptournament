@@ -16,7 +16,11 @@ class AddDataToFriendTable extends AbstractMigration
                         ('Friend C', NOW(), NOW()),
                         ('Friend D', NOW(), NOW()),
                         ('Friend E', NOW(), NOW()),
-                        ('Friend F', NOW(), NOW());",
+                        ('Friend F', NOW(), NOW()),
+                        ('Friend G', NOW(), NOW()),
+                        ('Friend H', NOW(), NOW()),
+                        ('Friend I', NOW(), NOW()),
+                        ('Friend J', NOW(), NOW());",
             self::TABLE_NAME
         );
 
