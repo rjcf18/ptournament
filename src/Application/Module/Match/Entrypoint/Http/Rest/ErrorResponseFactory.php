@@ -1,5 +1,5 @@
 <?php
-namespace PoolTournament\Application\Module\Match\Entrypoint;
+namespace PoolTournament\Application\Module\Match\Entrypoint\Http\Rest;
 
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Response;
 use PoolTournament\Domain\Module\Match\FetchInfo\Exception\MatchNotFoundException;

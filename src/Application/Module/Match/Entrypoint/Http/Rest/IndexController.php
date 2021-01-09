@@ -1,10 +1,9 @@
 <?php declare(strict_types=1);
-namespace PoolTournament\Application\Module\Match\Entrypoint;
+namespace PoolTournament\Application\Module\Match\Entrypoint\Http\Rest;
 
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Request;
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Response;
 use PoolTournament\Domain\Module\Match\FetchInfo\DTO\Request as MatchFetchInfoRequestDTO;
-use PoolTournament\Domain\Module\Match\FetchInfo\Exception\MatchNotFoundException;
 use PoolTournament\Domain\Module\Match\FetchInfo\Service as MatchFetchInfoService;
 use Throwable;
 
@@ -35,8 +34,8 @@ class IndexController
         }
     }
 
-    public function resultAction(Request $request)
+    public function resultAction(Request $request): Response
     {
-        echo "Match result submission page";
+        return (new Response(200))->setBody(['message' => "Match result submission page"]);
     }
 }

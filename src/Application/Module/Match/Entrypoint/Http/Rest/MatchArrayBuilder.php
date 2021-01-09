@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace PoolTournament\Application\Module\Match\Entrypoint;
+namespace PoolTournament\Application\Module\Match\Entrypoint\Http\Rest;
 
 use PoolTournament\Domain\Module\Match\Entity\FriendEntity;
 use PoolTournament\Domain\Module\Match\Entity\MatchEntity;
