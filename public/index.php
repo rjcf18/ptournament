@@ -6,6 +6,7 @@ require PROJECT_ROOT . '/vendor/autoload.php';
 
 use DI\Container;
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Request;
+use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Response;
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Routing\Router;
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Routing\RouterConfig;
 
@@ -22,7 +23,12 @@ try {
     $router = new Router($routerConfigs);
     $route = $router->matchRequestToRoute($request);
 
-    $container->call([$route->getController(), $route->getAction()], [$request]);
+    /** @var Response $response */
+    $response = $container->call([$route->getController(), $route->getAction()], [$request]);
+
+    http_response_code($response->getCode());
+
+    echo json_encode($response->getBody());
 } catch (Throwable $throwable) {
     http_response_code(500);
 

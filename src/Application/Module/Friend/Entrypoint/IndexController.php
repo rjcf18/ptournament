@@ -2,6 +2,7 @@
 namespace PoolTournament\Application\Module\Friend\Entrypoint;
 
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Request;
+use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Response;
 use PoolTournament\Domain\Module\Friend\FetchInfo\DTO\Request as FriendFetchInfoRequestDTO;
 use PoolTournament\Domain\Module\Friend\FetchInfo\Exception\FriendNotFoundException;
 use PoolTournament\Domain\Module\Friend\FetchInfo\Service as FriendFetchInfoService;
@@ -19,13 +20,15 @@ class IndexController
      * @param Request $request
      *
      * @throws FriendNotFoundException
+     *
+     * @return Response
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $namedParameters = $request->getNamedParameters();
         $friendId = (int) $namedParameters['id'];
 
-        echo json_encode(
+        return (new Response(200))->setBody(
             FriendArrayBuilder::build(
                 $this->friendFetchInfoService->fetchInfo(
                     new FriendFetchInfoRequestDTO($friendId)
