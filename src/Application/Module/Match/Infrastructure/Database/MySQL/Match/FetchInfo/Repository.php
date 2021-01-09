@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match;
+namespace PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\FetchInfo;
 
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\Connection;
 use PoolTournament\Domain\Module\Match\Entity\MatchEntity;
@@ -38,7 +38,7 @@ class Repository implements MatchRepository
         return MatchEntityFactory::create($match, $winnerFriend, $looserFriend);
     }
 
-    public function getMatchByIdQuery(int $id): string
+    private function getMatchByIdQuery(int $id): string
     {
         return sprintf(
             "SELECT * FROM `%s` WHERE `id_match` = %s;",
@@ -47,7 +47,7 @@ class Repository implements MatchRepository
         );
     }
 
-    public function getFriendByIdQuery(int $id): string
+    private function getFriendByIdQuery(int $id): string
     {
         return sprintf(
             "SELECT * FROM `%s` WHERE `id_friend` = %s;",

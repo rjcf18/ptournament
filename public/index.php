@@ -7,6 +7,7 @@ require PROJECT_ROOT . '/vendor/autoload.php';
 use DI\Container;
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Request;
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Response;
+use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Routing\Exception\ForbiddenRequestMethodException;
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Routing\Router;
 use PoolTournament\Application\Module\Core\Entrypoint\Http\Rest\Routing\RouterConfig;
 
@@ -29,6 +30,13 @@ try {
     http_response_code($response->getCode());
 
     echo json_encode($response->getBody());
+} catch (ForbiddenRequestMethodException $exception) {
+    http_response_code(405);
+
+    echo json_encode([
+        'code' => 405,
+        'error' => $exception->getMessage()
+    ]);
 } catch (Throwable $throwable) {
     http_response_code(500);
 

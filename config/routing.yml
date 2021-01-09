@@ -3,6 +3,6 @@ base_path: /
 routes:
   homepage: [/, PoolTournament\Application\Module\Tournament\Entrypoint\Http\Rest\IndexController::indexAction, GET]
   homepage/index: [/index, PoolTournament\Application\Module\Tournament\Entrypoint\Http\Rest\IndexController::indexAction, GET]
-  match: [/match/:id, PoolTournament\Application\Module\Match\Entrypoint\Http\Rest\IndexController::indexAction, GET]
-  friend: [/friend/:id, PoolTournament\Application\Module\Friend\Entrypoint\Http\Rest\IndexController::indexAction, GET]
   match/result: [/match/result, PoolTournament\Application\Module\Match\Entrypoint\Http\Rest\IndexController::resultAction, [POST, PUT]]
+  match: [/match/:id, PoolTournament\Application\Module\Match\Entrypoint\Http\Rest\IndexController::infoAction, GET]
+  friend: [/friend/:id, PoolTournament\Application\Module\Friend\Entrypoint\Http\Rest\IndexController::infoAction, GET]

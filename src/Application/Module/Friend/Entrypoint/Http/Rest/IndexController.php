@@ -23,7 +23,7 @@ class IndexController
      *
      * @return Response
      */
-    public function indexAction(Request $request): Response
+    public function infoAction(Request $request): Response
     {
         $namedParameters = $request->getNamedParameters();
         $friendId = (int) $namedParameters['id'];

@@ -6,10 +6,18 @@ use DI\ContainerBuilder;
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\Connection;
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\ConnectionConfig;
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\SchemaUpdateManager;
-use PoolTournament\Application\Module\Friend\Infrastructure\Database\MySQL\Friend\Repository as MySQLFriendRepository;
-use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\Repository as MySQLMatchRepository;
-use PoolTournament\Domain\Module\Friend\FetchInfo\FriendRepository as FriendRepositoryContract;
-use PoolTournament\Domain\Module\Match\FetchInfo\MatchRepository as MatchRepositoryContract;
+use PoolTournament\Application\Module\Friend\Infrastructure\Database\MySQL\Friend\Repository
+    as MySQLFriendFetchInfoRepository;
+use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\FetchInfo\Repository
+    as MySQLMatchFetchInfoRepository;
+use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\Creation\MatchRepository
+    as MySQLMatchCreationRepository;
+use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\Creation\FriendRepository
+    as MySQLMatchCreationFriendRepository;
+use PoolTournament\Domain\Module\Friend\FetchInfo\FriendRepository as FriendFetchInfoRepositoryContract;
+use PoolTournament\Domain\Module\Match\FetchInfo\MatchRepository as MatchFetchInfoRepositoryContract;
+use PoolTournament\Domain\Module\Match\Creation\MatchRepository as MatchCreationMatchRepositoryContract;
+use PoolTournament\Domain\Module\Match\Creation\FriendRepository as MatchCreationFriendRepositoryContract;
 
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions(
@@ -25,8 +33,10 @@ $containerBuilder->addDefinitions(
             ->constructor(DI\get(Connection::class), __DIR__ . '/../database/migrations'),
         SchemaUpdateManager::class . '_seeds'=> DI\create(SchemaUpdateManager::class)
             ->constructor(DI\get(Connection::class), __DIR__ . '/../database/seeds'),
-        FriendRepositoryContract::class => DI\autowire(MySQLFriendRepository::class),
-        MatchRepositoryContract::class => DI\autowire(MySQLMatchRepository::class),
+        FriendFetchInfoRepositoryContract::class => DI\autowire(MySQLFriendFetchInfoRepository::class),
+        MatchFetchInfoRepositoryContract::class => DI\autowire(MySQLMatchFetchInfoRepository::class),
+        MatchCreationMatchRepositoryContract::class => DI\autowire(MySQLMatchCreationRepository::class),
+        MatchCreationFriendRepositoryContract::class => DI\autowire(MySQLMatchCreationFriendRepository::class),
     ]
 );
 
