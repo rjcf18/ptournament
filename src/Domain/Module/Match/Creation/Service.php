@@ -74,7 +74,7 @@ class Service
     public function updateLooserFriend(RequestDTO $request): FriendEntity
     {
         $updatedLooserFriend = $this->friendRepository->updateLooserInfo(
-            $request->getWinnerId(),
+            $request->getLooserId(),
             1,
             $request->getLooserBallsLeft()
         );
