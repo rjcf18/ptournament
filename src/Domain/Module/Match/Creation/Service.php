@@ -10,6 +10,9 @@ use PoolTournament\Domain\Module\Match\Entity\FriendEntity;
 
 class Service
 {
+    private const WINNER_POINTS = 3;
+    private const LOOSER_POINTS = 1;
+
     private MatchRepository $matchRepository;
     private FriendRepository $friendRepository;
 
@@ -55,7 +58,10 @@ class Service
      */
     public function updateWinnerFriend(RequestDTO $request): FriendEntity
     {
-        $updatedWinnerFriend = $this->friendRepository->updateWinnerInfo($request->getWinnerId(), 3);
+        $updatedWinnerFriend = $this->friendRepository->updateWinnerInfo(
+            $request->getWinnerId(),
+            self::WINNER_POINTS
+        );
 
         if (empty($updatedWinnerFriend)) {
             throw new WinnerInfoUpdateErrorException();
@@ -75,7 +81,7 @@ class Service
     {
         $updatedLooserFriend = $this->friendRepository->updateLooserInfo(
             $request->getLooserId(),
-            1,
+            self::LOOSER_POINTS,
             $request->getLooserBallsLeft()
         );
 
