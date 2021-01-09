@@ -7,7 +7,9 @@ use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\Connect
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\ConnectionConfig;
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\SchemaUpdateManager;
 use PoolTournament\Application\Module\Friend\Infrastructure\Database\MySQL\Friend\Repository as MySQLFriendRepository;
+use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\Repository as MySQLMatchRepository;
 use PoolTournament\Domain\Module\Friend\FetchInfo\FriendRepository as FriendRepositoryContract;
+use PoolTournament\Domain\Module\Match\FetchInfo\MatchRepository as MatchRepositoryContract;
 
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions(
@@ -24,6 +26,7 @@ $containerBuilder->addDefinitions(
         SchemaUpdateManager::class . '_seeds'=> DI\create(SchemaUpdateManager::class)
             ->constructor(DI\get(Connection::class), __DIR__ . '/../database/seeds'),
         FriendRepositoryContract::class => DI\autowire(MySQLFriendRepository::class),
+        MatchRepositoryContract::class => DI\autowire(MySQLMatchRepository::class),
     ]
 );
 
