@@ -1,10 +1,9 @@
 base_path: /
 
 routes:
-  homepage: [/, PoolTournament\Application\Module\Tournament\Entrypoint\Http\Rest\IndexController::indexAction, GET]
-  homepage/index: [/index, PoolTournament\Application\Module\Tournament\Entrypoint\Http\Rest\IndexController::indexAction, GET]
   match/result: [/match/result, PoolTournament\Application\Module\Match\Entrypoint\Http\Rest\IndexController::resultAction, [POST, PUT]]
   match/list: [/match/list, PoolTournament\Application\Module\Match\Entrypoint\Http\Rest\IndexController::listAction, GET]
-  match: [/match/:id, PoolTournament\Application\Module\Match\Entrypoint\Http\Rest\IndexController::infoAction, GET]
-  friend: [/friend/:id, PoolTournament\Application\Module\Friend\Entrypoint\Http\Rest\IndexController::infoAction, GET]
+  match/info: [/match/:id, PoolTournament\Application\Module\Match\Entrypoint\Http\Rest\IndexController::infoAction, GET]
+  friend/ranking: [/friend/ranking, PoolTournament\Application\Module\Friend\Entrypoint\Http\Rest\IndexController::rankingAction, GET]
+  friend/info: [/friend/:id, PoolTournament\Application\Module\Friend\Entrypoint\Http\Rest\IndexController::infoAction, GET]
   friend/matches: [/friend/:id/matches, PoolTournament\Application\Module\Friend\Entrypoint\Http\Rest\IndexController::matchesAction, GET]

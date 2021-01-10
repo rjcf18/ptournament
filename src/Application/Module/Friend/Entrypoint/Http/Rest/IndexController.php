@@ -56,4 +56,13 @@ class IndexController
             )
         );
     }
+
+    public function rankingAction(Request $request): Response
+    {
+        return (new Response(200))->setBody(
+            [
+                'message' => 'Endpoint in progress'
+            ]
+        );
+    }
 }
