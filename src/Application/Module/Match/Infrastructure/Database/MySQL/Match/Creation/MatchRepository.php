@@ -3,6 +3,7 @@ namespace PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\
 
 use DateTimeImmutable;
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\Connection;
+use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\MatchEntityFactory;
 use PoolTournament\Domain\Module\Match\Creation\DTO\Request as RequestDTO;
 use PoolTournament\Domain\Module\Match\Creation\MatchRepository as CreationMatchRepository;
 use PoolTournament\Domain\Module\Match\Entity\MatchEntity;

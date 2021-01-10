@@ -8,14 +8,17 @@ use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\Connect
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\SchemaUpdateManager;
 use PoolTournament\Application\Module\Friend\Infrastructure\Database\MySQL\Friend\Repository
     as MySQLFriendFetchInfoRepository;
-use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\FetchInfo\Repository
+use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\FetchInfo\MatchRepository
     as MySQLMatchFetchInfoRepository;
+use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\FetchList\MatchRepository
+    as MySQLMatchFetchListRepository;
 use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\Creation\MatchRepository
-    as MySQLMatchCreationRepository;
+    as MySQLMatchCreationMatchRepository;
 use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\Creation\FriendRepository
     as MySQLMatchCreationFriendRepository;
 use PoolTournament\Domain\Module\Friend\FetchInfo\FriendRepository as FriendFetchInfoRepositoryContract;
 use PoolTournament\Domain\Module\Match\FetchInfo\MatchRepository as MatchFetchInfoRepositoryContract;
+use PoolTournament\Domain\Module\Match\FetchList\MatchRepository as MatchFetchListRepositoryContract;
 use PoolTournament\Domain\Module\Match\Creation\MatchRepository as MatchCreationMatchRepositoryContract;
 use PoolTournament\Domain\Module\Match\Creation\FriendRepository as MatchCreationFriendRepositoryContract;
 
@@ -35,7 +38,8 @@ $containerBuilder->addDefinitions(
             ->constructor(DI\get(Connection::class), __DIR__ . '/../database/seeds'),
         FriendFetchInfoRepositoryContract::class => DI\autowire(MySQLFriendFetchInfoRepository::class),
         MatchFetchInfoRepositoryContract::class => DI\autowire(MySQLMatchFetchInfoRepository::class),
-        MatchCreationMatchRepositoryContract::class => DI\autowire(MySQLMatchCreationRepository::class),
+        MatchFetchListRepositoryContract::class => DI\autowire(MySQLMatchFetchListRepository::class),
+        MatchCreationMatchRepositoryContract::class => DI\autowire(MySQLMatchCreationMatchRepository::class),
         MatchCreationFriendRepositoryContract::class => DI\autowire(MySQLMatchCreationFriendRepository::class),
     ]
 );

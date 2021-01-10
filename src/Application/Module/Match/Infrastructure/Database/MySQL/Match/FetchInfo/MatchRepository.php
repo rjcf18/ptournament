@@ -2,10 +2,11 @@
 namespace PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\FetchInfo;
 
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\Connection;
+use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\MatchEntityFactory;
 use PoolTournament\Domain\Module\Match\Entity\MatchEntity;
-use PoolTournament\Domain\Module\Match\FetchInfo\MatchRepository;
+use PoolTournament\Domain\Module\Match\FetchInfo\MatchRepository as FetchInfoMatchRepository;
 
-class Repository implements MatchRepository
+class MatchRepository implements FetchInfoMatchRepository
 {
     protected const MATCH_TABLE_NAME = 'match';
     protected const FRIEND_TABLE_NAME = 'friend';

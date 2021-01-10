@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\Creation;
+namespace PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match;
 
 use DateTimeImmutable;
 use PoolTournament\Domain\Module\Match\Entity\MatchEntity;
