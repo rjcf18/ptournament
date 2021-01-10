@@ -1,11 +1,12 @@
 <?php declare(strict_types=1);
-namespace PoolTournament\Application\Module\Friend\Infrastructure\Database\MySQL\Friend;
+namespace PoolTournament\Application\Module\Friend\Infrastructure\Database\MySQL\Friend\FetchInfo;
 
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\Connection;
+use PoolTournament\Application\Module\Friend\Infrastructure\Database\MySQL\Friend\FriendEntityFactory;
 use PoolTournament\Domain\Module\Friend\Entity\Friend as FriendEntity;
-use PoolTournament\Domain\Module\Friend\FetchInfo\FriendRepository;
+use PoolTournament\Domain\Module\Friend\FetchInfo\FriendRepository as FetchInfoFriendRepository;
 
-class Repository implements FriendRepository
+class FriendRepository implements FetchInfoFriendRepository
 {
     protected const FRIEND_TABLE_NAME = 'friend';
 

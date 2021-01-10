@@ -6,8 +6,10 @@ use DI\ContainerBuilder;
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\Connection;
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\ConnectionConfig;
 use PoolTournament\Application\Module\Core\Infrastructure\Database\MySQL\SchemaUpdateManager;
-use PoolTournament\Application\Module\Friend\Infrastructure\Database\MySQL\Friend\Repository
+use PoolTournament\Application\Module\Friend\Infrastructure\Database\MySQL\Friend\FetchInfo\FriendRepository
     as MySQLFriendFetchInfoRepository;
+use PoolTournament\Application\Module\Friend\Infrastructure\Database\MySQL\Friend\FetchRanking\FriendRepository
+    as MySQLFriendFetchRankingRepository;
 use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\FetchInfo\MatchRepository
     as MySQLMatchFetchInfoRepository;
 use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\FetchList\MatchRepository
@@ -17,6 +19,7 @@ use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\
 use PoolTournament\Application\Module\Match\Infrastructure\Database\MySQL\Match\Creation\FriendRepository
     as MySQLMatchCreationFriendRepository;
 use PoolTournament\Domain\Module\Friend\FetchInfo\FriendRepository as FriendFetchInfoRepositoryContract;
+use PoolTournament\Domain\Module\Friend\FetchRanking\FriendRepository as FriendFetchRankingRepositoryContract;
 use PoolTournament\Domain\Module\Match\FetchInfo\MatchRepository as MatchFetchInfoRepositoryContract;
 use PoolTournament\Domain\Module\Match\FetchList\MatchRepository as MatchFetchListRepositoryContract;
 use PoolTournament\Domain\Module\Match\Creation\MatchRepository as MatchCreationMatchRepositoryContract;
@@ -37,6 +40,7 @@ $containerBuilder->addDefinitions(
         SchemaUpdateManager::class . '_seeds'=> DI\create(SchemaUpdateManager::class)
             ->constructor(DI\get(Connection::class), __DIR__ . '/../database/seeds'),
         FriendFetchInfoRepositoryContract::class => DI\autowire(MySQLFriendFetchInfoRepository::class),
+        FriendFetchRankingRepositoryContract::class => DI\autowire(MySQLFriendFetchRankingRepository::class),
         MatchFetchInfoRepositoryContract::class => DI\autowire(MySQLMatchFetchInfoRepository::class),
         MatchFetchListRepositoryContract::class => DI\autowire(MySQLMatchFetchListRepository::class),
         MatchCreationMatchRepositoryContract::class => DI\autowire(MySQLMatchCreationMatchRepository::class),
