@@ -81,4 +81,20 @@ class MatchRepository implements CreationMatchRepository
             $this->connection->quote((string)$id, Connection::PARAM_INT)
         );
     }
+
+    public function friendsAlreadyPlayed(int $friendId1, int $friendId2): bool
+    {
+        $query = sprintf(
+            'SELECT * FROM `%1$s`
+                WHERE (`winner_id` = %2$s AND `looser_id` = %3$s) OR (`winner_id` = %3$s AND `looser_id` = %2$s);',
+            self::MATCH_TABLE_NAME,
+            $this->connection->quote((string) $friendId1, Connection::PARAM_INT),
+            $this->connection->quote((string) $friendId2, Connection::PARAM_INT),
+        );
+
+        $statement = $this->connection->query($query, Connection::FETCH_ASSOC);
+        $match = $statement->fetch();
+
+        return !empty($match);
+    }
 }

@@ -7,4 +7,5 @@ use PoolTournament\Domain\Module\Match\Entity\MatchEntity;
 interface MatchRepository
 {
     public function create(RequestDTO $creationDTO): ?MatchEntity;
+    public function friendsAlreadyPlayed(int $friendId1, int $friendId2): bool;
 }

@@ -3,6 +3,7 @@ namespace PoolTournament\Domain\Module\Match\Creation;
 
 use PoolTournament\Domain\Module\Match\Creation\DTO\Request as RequestDTO;
 use PoolTournament\Domain\Module\Match\Creation\DTO\Response as ResponseDTO;
+use PoolTournament\Domain\Module\Match\Creation\Exception\FriendsAlreadyPlayedException;
 use PoolTournament\Domain\Module\Match\Creation\Exception\LooserInfoUpdateErrorException;
 use PoolTournament\Domain\Module\Match\Creation\Exception\MatchCreationErrorException;
 use PoolTournament\Domain\Module\Match\Creation\Exception\WinnerInfoUpdateErrorException;
@@ -28,11 +29,16 @@ class Service
      * @throws LooserInfoUpdateErrorException
      * @throws MatchCreationErrorException
      * @throws WinnerInfoUpdateErrorException
+     * @throws FriendsAlreadyPlayedException
      *
      * @return ResponseDTO
      */
     public function create(RequestDTO $request): ResponseDTO
     {
+        if ($this->matchRepository->friendsAlreadyPlayed($request->getWinnerId(), $request->getLooserId())) {
+            throw new FriendsAlreadyPlayedException();
+        }
+
         $createdMatch = $this->matchRepository->create($request);
         if (empty($createdMatch)) {
             throw new MatchCreationErrorException();
