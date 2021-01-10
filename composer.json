@@ -14,7 +14,8 @@
         "php-di/php-di": "6.3.0",
         "ext-yaml": "*",
         "ext-json": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "ext-xdebug": "*"
     },
     "autoload": {
         "psr-4": {
